@@ -51,7 +51,7 @@ def get_video_skeleton(data: List[List[HarPoint]]) -> np.ndarray:
 
 
 def predict(data: List[List[HarPoint]]) -> Dict:
-    input = get_video_skeleton(data)
+    # input = get_video_skeleton(data)
 
     return {
         "code": 0,
@@ -59,5 +59,6 @@ def predict(data: List[List[HarPoint]]) -> Dict:
         "data": {
             "idAction": 0,
             "nameAction": "Brush teeth",
+            "version": "TK HAR 1.0"
         }
     }
