@@ -1,10 +1,10 @@
-from typing import List
+from typing import Dict, List
 
 import numpy as np
 from entity.request import HarPoint
 
 
-def get_skeleton(data: List[HarPoint]) -> np.ndarray:
+def get_img_skeleton(data: List[HarPoint]) -> np.ndarray:
     def _get_joint(idx: int):
         return np.array([data[idx].z, data[idx].x, data[idx].y])
 
@@ -42,9 +42,22 @@ def get_skeleton(data: List[HarPoint]) -> np.ndarray:
     )
 
 
-def get_input(data: List[List[HarPoint]]) -> np.ndarray:
-    output = [get_skeleton(skeleton) for skeleton in data]
+def get_video_skeleton(data: List[List[HarPoint]]) -> np.ndarray:
+    output = [get_img_skeleton(skeleton) for skeleton in data]
     output = np.array(output).transpose(2, 0, 1)
     output = np.expand_dims(output, axis=[-1, 0])
     output = np.squeeze(output, axis=0)
     return np.array(output)
+
+
+def predict(data: List[List[HarPoint]]) -> Dict:
+    input = get_video_skeleton(data)
+
+    return {
+        "code": 0,
+        "message": "OK",
+        "data": {
+            "idAction": 0,
+            "nameAction": "Brush teeth",
+        }
+    }

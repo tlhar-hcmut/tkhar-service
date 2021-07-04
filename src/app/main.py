@@ -16,12 +16,6 @@ api.add_middleware(
 )
 
 
-@api.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
 @api.post("/har")
 async def har(req: HarReq):
-    print(tkhar.get_input(req.data).shape)
-    return {"message": "Hello World"}
+    return tkhar.predict(req.data)
