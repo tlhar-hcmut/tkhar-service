@@ -1,15 +1,8 @@
-import time
+from fastapi import FastAPI
+
+api = FastAPI()
 
 
-def xprint(*values: object):
-    print(*values, flush=True)
-
-
-def main():
-    xprint("Start")
-    time.sleep(10)
-    xprint("Stop")
-
-
-if __name__ == "__main__":
-    main()
+@api.get("/")
+async def root():
+    return {"message": "Hello World"}

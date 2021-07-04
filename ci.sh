@@ -7,7 +7,7 @@ build() {
     python3 -m venv "$DIR_ENV"
     touch "$path_success"
     mkdir -p "src"
-    pip3 install -e . -i "$PYPI"
+    pip3 install -e .
     [ "$?" -ne 0 ] && return 1
     if [ -d "tests" ]; then
         pytest "tests"
@@ -17,12 +17,16 @@ build() {
     return 0
 }
 
-start() {
-    python3 -m "app.main"
+prod() {
+    uvicorn app.main:api
+}
+
+dev() {
+    uvicorn app.main:api --reload
 }
 
 ACTION="${1?}"
-LS_ACTION="build start"
+LS_ACTION="build prod dev"
 for ACTION in "$@"; do
     [ "$?" -ne 0 ] && exit 1
     mkdir -p ".ci"
