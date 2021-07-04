@@ -1,0 +1,6 @@
+/.ci/
+/log/
+/tmp/
+**/*.egg-info/
+**/__pycache__/
+/.venv/
