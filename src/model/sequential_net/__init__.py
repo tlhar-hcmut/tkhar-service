@@ -1,13 +1,15 @@
+import torch
+import torch.nn.functional as F
 from torch import nn
-from . import temporal_net
+
+from . import spatial_net, temporal_net
+
 
 class SequentialNet(nn.Module):
-    def __init__(
-        self, stream=[0, 1], num_class=60, cls_graph=None, graph_args=dict(), **kargs
-    ):
+    def __init__(self, num_class=60, **kargs):
         super(SequentialNet, self).__init__()
 
-        self.spatial_net = stream_spatial_test.StreamSpatialGCN(**kargs)
+        self.spatial_net = spatial_net.StreamSpatialGCN(**kargs)
 
         self.temporal_net = temporal_net.StreamTemporalGCN(**kargs)
 

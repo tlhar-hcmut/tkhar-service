@@ -36,4 +36,3 @@ class SelfAttention(nn.Module):
 
         attention = torch.matmul(scores, V)
         return attention
-

@@ -1,5 +1,4 @@
 {
-    "python.languageServer": "Pylance",
     "python.analysis.typeCheckingMode": "off",
     "python.testing.pytestArgs": [
         "tests"

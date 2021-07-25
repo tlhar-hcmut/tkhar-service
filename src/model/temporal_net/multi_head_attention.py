@@ -17,13 +17,15 @@ class MultiHeadAttention(nn.Module):
 
         self.num_head = num_head
 
-        self.len_feature_partials = divide_head(self.num_head, len_feature_input_mulA)
+        self.len_feature_partials = divide_head(
+            self.num_head, len_feature_input_mulA)
 
         self.attention = nn.ModuleList(
             [
                 SelfAttention(
                     len_feature_input_selfA=len_feature,
-                    len_feature_hidden_selfA=len_feature,  # mat_key,query,value is square. Can be increase hidden feature size
+                    # mat_key,query,value is square. Can be increase hidden feature size
+                    len_feature_hidden_selfA=len_feature,
                     dropout=dropout,
                 )
                 for len_feature in self.len_feature_partials
@@ -31,7 +33,6 @@ class MultiHeadAttention(nn.Module):
         )
 
         self.fusion1 = AttentionFusion(
-            num_head=num_head,
             len_feature_input_fusion=len_feature_input_mulA,
             len_feature_new_fusion=len_feature_new_mulA,
             dropout=dropout,

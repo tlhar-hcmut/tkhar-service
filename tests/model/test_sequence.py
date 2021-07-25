@@ -1,3 +1,4 @@
 
-def test_main():
+
+def test_model():
     assert "alo" == "alo"

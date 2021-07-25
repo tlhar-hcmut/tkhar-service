@@ -25,7 +25,6 @@ class StreamTemporalGCN(nn.Module):
             input_size_transformer=(num_frame, channels),
             len_feature_new=len_feature_new,
             num_block=num_block,
-            len_seq=num_frame,
             dropout=dropout,
             num_head=num_head,
         )
@@ -40,7 +39,8 @@ class StreamTemporalGCN(nn.Module):
 
     def forward(self, X):
         N_0, C_0, T_0, V_0, M_0 = X.size()
-        X = X.permute(0, 4, 3, 2, 1).contiguous().view(N_0 * M_0, V_0, T_0, C_0)
+        X = X.permute(0, 4, 3, 2, 1).contiguous().view(
+            N_0 * M_0, V_0, T_0, C_0)
         X = X.contiguous().view(-1, T_0, C_0)
         X = self.transformer(X)
         X = X.contiguous().view(N_0 * M_0 * V_0, T_0, -1).mean(-1).squeeze()
