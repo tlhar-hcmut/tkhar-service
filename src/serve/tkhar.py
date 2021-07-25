@@ -1,5 +1,6 @@
 from typing import Dict, List
 
+import model
 import numpy as np
 from entity.request import HarPoint
 
@@ -51,8 +52,8 @@ def get_video_skeleton(data: List[List[HarPoint]]) -> np.ndarray:
 
 
 def predict(data: List[List[HarPoint]]) -> Dict:
-    # input = get_video_skeleton(data)
-
+    input = get_video_skeleton(data)
+    print(model.model_se_25(input))
     return {
         "code": 0,
         "message": "OK",
