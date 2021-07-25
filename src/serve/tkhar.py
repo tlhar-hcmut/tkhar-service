@@ -56,9 +56,5 @@ def predict(data: List[List[HarPoint]]) -> Dict:
     return {
         "code": 0,
         "message": "OK",
-        "data": {
-            "idAction": 0,
-            "nameAction": "Brush teeth",
-            "version": "TK HAR 1.0"
-        }
+        "data": {"idAction": 0, "nameAction": "Brush teeth", "version": "TK HAR 1.0"},
     }
