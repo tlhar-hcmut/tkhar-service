@@ -1,7 +1,7 @@
 from entity.request import HarReq
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from model import tkhar
+from serve import tkhar
 
 api = FastAPI()
 
