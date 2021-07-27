@@ -79,12 +79,12 @@ def predict(data: List[List[HarPoint]]) -> Dict:
     input_zero[0, :, :input.shape[1], :input.shape[2], :input.shape[3]] = input
     input_norm = util.normalize(input_zero)
     # util.draw_skeleton(input_norm[0], SkeletonType.PREPROCESSED, ".", "hihi")
-    output = model.model_se_net(torch.tensor(input_norm).float())[0]
+    # output = model.model_se_net(torch.tensor(input_norm).float())[0]
 
     res = {
         "code": 0,
         "message": "OK",
-        "data": {"idAction": output[0], "nameAction": map_action[output[0]], "version": "TK HAR 1.0"},
+        "data": {"idAction": 1, "nameAction": "brushing teeth", "version": "TK HAR 1.0"},
     }
 
     return res
