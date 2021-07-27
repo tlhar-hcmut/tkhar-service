@@ -1,0 +1,14 @@
+{
+  "postDebugTask": "killdebugger",
+  "configurations": [
+    {
+      "name": "Python: FastAPI",
+      "request": "launch",
+      "type":"python",
+      "module": "/home/thucth/thucth/OTHERS/THESIS/tkhar-service/.venv/bin/uvicorn",
+      "args": ["app.main:api"],
+      "jinja": true,
+      "cwd": "${workspaceFolder}/src"
+    }
+  ]
+}
