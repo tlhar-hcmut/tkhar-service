@@ -226,5 +226,5 @@ model_se_net = SequentialNet(
     num_head=8,
 )
 
-model_se_net.load_state_dict(torch.load(
-    "model_71.pt", map_location=torch.device('cpu')))
+model_se_net.load_state_dict(torch.load("model_71.pt", map_location=torch.device('cpu')))
+model_se_net.eval()
