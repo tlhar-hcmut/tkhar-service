@@ -5,7 +5,6 @@ import numpy as np
 import torch
 import util
 from entity.request import HarPoint
-from util.visualization import SkeletonType
 
 
 def get_img_skeleton(data: List[HarPoint]) -> np.ndarray:
@@ -58,47 +57,42 @@ def get_video_skeleton(data: List[List[HarPoint]]) -> np.ndarray:
 
 
 map_action = {
-    0: "brushing teeth",
-    1: "brushing hair",
-    2: "throw",
-    3: "sitting down",
-    4: "standing up from sitting position",
-    5: "clapping",
-    6: "take off a hat/cap",
-    7: "hand waving",
-    8: "jump up",
-    9: "make a phone call/answer phone",
-    10: " shake",
-    11: " side kick",
+    0: "Brushing teeth",
+    1: "Brushing hair",
+    2: "Throw",
+    3: "Sitting down",
+    4: "Standing up from sitting position",
+    5: "Clapping",
+    6: "Take off a hat/cap",
+    7: "Hand waving",
+    8: "Jump up",
+    9: "Make a phone call/answer phone",
+    10: "Shake fist",
+    11: "Side kick",
 }
 
 
 def predict(data: List[List[HarPoint]]) -> Dict:
+    print(len(data))
     input = get_video_skeleton(data)
     input_zero = np.zeros((1, 3, 300, 26, 2))
     input_zero[0, :, :input.shape[1], :input.shape[2], :input.shape[3]] = input
     input_norm = util.normalize(input_zero)
-    # util.draw_skeleton(input_norm[0], SkeletonType.PREPROCESSED, ".", "hihi")
-    # output = model.model_se_net(torch.tensor(input_norm).float())[0]
-
-    res = {
+    output = model.model_se_net(torch.tensor(input_norm).float())[0]
+    print(output)
+    output = model.model_se_net(torch.tensor(input_norm).float())[0]
+    print(output)
+    output = model.model_se_net(torch.tensor(input_norm).float())[0]
+    print(output)
+    predict = []
+    for id, confidence in enumerate(torch.softmax(output, dim=-1)):
+        predict.append({
+            "id": id,
+            "action": map_action[id],
+            "confidence": round(confidence.item() * 100, 2)
+        })
+    return {
         "code": 0,
         "message": "OK",
-        "data": {"idAction": 1, "nameAction": "brushing teeth", "version": "TK HAR 1.0"},
+        "data": {"predict": predict},
     }
-
-    return res
-
-
-# % 0 brushing teeth (3),
-# % 1 brushing hair (4),
-# % 2 throw (7),
-# % 3 sitting down (8),
-# % 4 standing up from sitting position (9),
-# % 5 clapping (10),
-# % 6 take off a hat/cap (21),
-# % 7 hand waving (23),
-# % 8 jump up (27),
-# % 9 make a phone call/answer phone (28),
-# % 10 shake fist (93)
-# % 11 side kick (102).
