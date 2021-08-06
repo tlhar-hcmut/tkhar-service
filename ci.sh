@@ -18,11 +18,11 @@ build() {
 }
 
 prod() {
-    uvicorn app.main:api
+    uvicorn app.main:api&
 }
 
 dev() {
-    uvicorn app.main:api --reload
+    uvicorn app.main:api --reload&
 }
 
 ACTION="${1?}"
