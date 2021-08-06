@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import util
 from entity.request import HarPoint
+from entity.response import HarPredict, HarResponse
 
 
 def get_img_skeleton(data: List[HarPoint]) -> np.ndarray:
@@ -72,7 +73,7 @@ map_action = {
 }
 
 
-def predict(data: List[List[HarPoint]]) -> Dict:
+def predict(data: List[List[HarPoint]]) -> HarResponse:
     print(len(data))
     input = get_video_skeleton(data)
     input_zero = np.zeros((1, 3, 300, 26, 2))
@@ -86,13 +87,13 @@ def predict(data: List[List[HarPoint]]) -> Dict:
     print(output)
     predict = []
     for id, confidence in enumerate(torch.softmax(output, dim=-1)):
-        predict.append({
-            "id": id,
-            "action": map_action[id],
-            "confidence": round(confidence.item() * 100, 2)
-        })
-    return {
-        "code": 0,
-        "message": "OK",
-        "data": {"predict": predict},
-    }
+        predict.append(HarPredict(
+            id=id,
+            action=map_action[id],
+            confidence=round(confidence.item() * 100, 2))
+        )
+    return HarResponse(
+        code=0,
+        message="OK",
+        data=predict,
+    )

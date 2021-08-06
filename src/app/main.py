@@ -1,4 +1,5 @@
 from entity.request import HarReq
+from entity.response import HarResponse, Response
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from serve import tkhar
@@ -17,6 +18,11 @@ api.add_middleware(
 )
 
 
+@api.get("/")
+async def home() -> Response:
+    return Response(code=0, message="TKHAR Backend")
+
+
 @api.post("/har")
-async def har(req: HarReq):
+async def har(req: HarReq) -> HarResponse:
     return tkhar.predict(req.data)
