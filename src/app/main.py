@@ -1,6 +1,6 @@
 from entity.request import HarReq
 from entity.response import Response
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from serve import tkhar
@@ -29,6 +29,11 @@ async def home() -> Response:
     return Response(code=0, message="TKHAR Backend")
 
 
-@api.post("/har")
+@api.post("/skeleton")
 async def har(req: HarReq) -> Response:
-    return tkhar.predict(req.data)
+    return tkhar.predict_skeleton(req.data)
+
+
+@api.post("/video")
+async def upload_file(file: UploadFile = File(...)):
+    return await tkhar.predict_video(file)
