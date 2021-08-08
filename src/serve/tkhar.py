@@ -9,7 +9,7 @@ import util
 from entity.request import HarPoint
 from entity.response import HarPredict, HarResponse, Response
 from fastapi import File, UploadFile
-from mediapipe.python.solutions import drawing_utils, pose
+from mediapipe.python.solutions import pose
 
 
 def get_img_skeleton(data: List[HarPoint]) -> np.ndarray:
@@ -130,13 +130,12 @@ async def predict_video(file: UploadFile = File(...)) -> Response:
 
         # util.draw_skeleton(input, util.SkeletonType.RAW, "viz", "minhhoa_raw", num_joint=25)
 
-
         print(input.shape)
         input_zero = np.zeros((1, 3, 300, 26, 2))
-        T = input.shape[1] if input.shape[1]<300 else 300
+        T = input.shape[1] if input.shape[1] < 300 else 300
         input_zero[0, :, :T,
-                   :input.shape[2], :input.shape[3]] = input[:,:T,:,:]
-        input_norm = util.normalize(input_zero)[:,:,:,:25,:]
+                   :input.shape[2], :input.shape[3]] = input[:, :T, :, :]
+        input_norm = util.normalize(input_zero)[:, :, :, :25, :]
 
         # util.draw_skeleton(input_norm[0], util.SkeletonType.PREPROCESSED, "viz", "minhhoa")
 
