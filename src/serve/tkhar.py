@@ -5,7 +5,7 @@ import numpy as np
 import torch
 import util
 from entity.request import HarPoint
-from entity.response import HarPredict, HarResponse
+from entity.response import HarPredict, HarResponse, Response
 
 
 def get_img_skeleton(data: List[HarPoint]) -> np.ndarray:
@@ -73,18 +73,14 @@ map_action = {
 }
 
 
-def predict(data: List[List[HarPoint]]) -> HarResponse:
-    print(len(data))
+def predict(data: List[List[HarPoint]]) -> Response:
+    if len(data) == 0:
+        return Response(code=-1, message="Empty Data")
     input = get_video_skeleton(data)
     input_zero = np.zeros((1, 3, 300, 26, 2))
     input_zero[0, :, :input.shape[1], :input.shape[2], :input.shape[3]] = input
     input_norm = util.normalize(input_zero)
     output = model.model_se_net(torch.tensor(input_norm).float())[0]
-    print(output)
-    output = model.model_se_net(torch.tensor(input_norm).float())[0]
-    print(output)
-    output = model.model_se_net(torch.tensor(input_norm).float())[0]
-    print(output)
     predict = []
     for id, confidence in enumerate(torch.softmax(output, dim=-1)):
         predict.append(HarPredict(
