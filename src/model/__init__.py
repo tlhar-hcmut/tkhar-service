@@ -5,6 +5,7 @@ import torch.nn.functional as F
 from torch import isnan, nn
 
 from . import stream_spatial, stream_temporal
+from .config import *
 
 
 class ParallelNet(nn.Module):
@@ -216,15 +217,14 @@ class TemporalNet_Sum(nn.Module):
         return output
 
 
-model_se_net = SequentialNet(
-    num_class=12,
-    input_size=(3, 300, 26, 2),
-    input_size_temporal=(8, 300, 26, 2),
-    len_feature_new=[256, 256, 512],
-    num_block=2,
-    dropout=0.2,
-    num_head=8,
-)
+# model_se_net = ParallelNet(** config_daily_26_parallel_xsub.__dict__)
 
-model_se_net.load_state_dict(torch.load("model_71.pt", map_location=torch.device('cpu')))
+# model_se_net.load_state_dict(torch.load(
+#     "../pa_model_103.pt", map_location=torch.device('cpu')))
+# model_se_net.eval()
+
+model_se_net = SequentialNet(** cfg_ds.__dict__)
+
+model_se_net.load_state_dict(torch.load(
+    "se_25_model_103.pt", map_location=torch.device('cpu')))
 model_se_net.eval()

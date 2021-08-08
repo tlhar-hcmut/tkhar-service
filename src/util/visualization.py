@@ -39,15 +39,15 @@ def draw_skeleton(
         os.remove(os.path.join(out_path, file_img))
 
     # show every frame 3d skeleton
-    for frame_idx in range(30):
+    for frame_idx in range(0,150,3):
 
         plt.cla()
         plt.title("Frame: {}".format(frame_idx))
 
         if type_skeleton == SkeletonType.RAW:
             ax.set_xlim3d([0.5, 2.5])
-            ax.set_ylim3d([0, 2])
-            ax.set_zlim3d([4, 6])
+            ax.set_ylim3d([1, 4])
+            ax.set_zlim3d([2, 5])
             x = skeleton[0, frame_idx, :, 0]
             y = skeleton[1, frame_idx, :, 0]
             z = skeleton[2, frame_idx, :, 0]

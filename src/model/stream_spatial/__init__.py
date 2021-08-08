@@ -5,7 +5,7 @@ import torch
 from torch import nn
 from torch.nn import *
 
-from .graph import NtuGraph
+from .ntu import NtuGraph
 
 
 class StreamSpatialGCN(Module):
