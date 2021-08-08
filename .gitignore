@@ -6,3 +6,4 @@
 /.venv/
 *.png
 *.gif
+sync.sh
