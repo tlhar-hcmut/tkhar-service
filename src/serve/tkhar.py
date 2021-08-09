@@ -73,8 +73,10 @@ def get_skeleton_by_frame(filename: str):
                 break
             result = extracter.process(
                 cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            ).pose_world_landmarks.landmark
-            ls_frame.append(get_img_skeleton(result))
+            ).pose_world_landmarks
+            if result != None:
+                ls_frame.append(get_img_skeleton(result.landmark))
+
     cap.release()
 
     output = np.expand_dims(
